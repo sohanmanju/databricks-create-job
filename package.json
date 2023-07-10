@@ -1,0 +1,17 @@
+{
+  "name": "databricks-create-job",
+  "version": "1.0.0",
+  "description": "This custom GitHub action is designed to automate the process of creating jobs in Databricks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1"
+  }
+}

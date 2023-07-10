@@ -1,0 +1,26 @@
+name: 'Databricks Deploy'
+description: 'Deploy a Databricks Job using the deployment JSON template'
+inputs:
+  input-folder: 
+    description: 'Folder path where the input files are located'
+    required: true 
+  template-file:
+    description: 'Job Template file name without extension'
+    required: true
+  input-file:
+    description: 'File which contains the inputs that need to be substituted in the jobs template file'
+    required: true
+  databricks-token:
+    description: 'Databricks Access Token to deploy the jobs in your account'
+    required: true
+  databricks-host:
+    description:  'Databricks Host URL'
+    required: true
+
+outputs:
+  response:
+    description: 'The API response from the Databricks job creation request'
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
