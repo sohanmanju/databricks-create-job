@@ -10,8 +10,8 @@ const databricks_host = core.getInput('databricks-host');
 
 async function createJob() {
   try {
-    const templateData = fs.readFileSync(`/${dir}/${template_file}.json`);
-    const inputData = fs.readFileSync(`/${dir}/${input_file}.json`);
+    const templateData = fs.readFileSync(`${dir}/${template_file}.json`);
+    const inputData = fs.readFileSync(`${dir}/${input_file}.json`);
 
     const input = JSON.parse(inputData);
     let template = JSON.parse(templateData);
