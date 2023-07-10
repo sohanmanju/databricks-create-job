@@ -16,11 +16,20 @@ async function createJob() {
     const input = JSON.parse(inputData);
     let template = JSON.parse(templateData);
 
-    for (let key in template) {
-      if (input.hasOwnProperty(key)) {
-        template[key] = input[key];
+
+    function replaceValues(obj, inputObj) {
+      if (typeof obj === 'object') {
+        for (let key in obj) {
+          if (typeof obj[key] === 'object') {
+            replaceValues(obj[key], inputObj);
+          } else if (typeof obj[key] === 'string' && inputObj.hasOwnProperty(obj[key])) {
+            obj[key] = inputObj[obj[key]];
+          }
+        }
       }
     }
+
+    replaceValues(template, input);
 
     const response = await fetch(`${databricks_host}/api/2.0/jobs/create`, {
       method: "POST",
