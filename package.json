@@ -4,6 +4,7 @@
   "description": "This custom GitHub action is designed to automate the process of creating jobs in Databricks.",
   "main": "index.js",
   "scripts": {
+    "build": "ncc build index.js --license licenses.txt",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
