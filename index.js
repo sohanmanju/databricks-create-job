@@ -45,10 +45,10 @@ async function createJob() {
       console.log("Job created successfully:", data);
       core.setOutput('response', JSON.stringify(data));
     } else {
-      core.setFailed("Failed to create job:", response.status);
+      core.setFailed(`Failed to create job: ${response.status} - ${errorText}`);
     }
   } catch (error) {
-    core.setFailed("Error occurred while creating job:", error);
+    core.setFailed(`Error occurred while creating job: ${error}`);
   }
 }
 
