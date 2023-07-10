@@ -1,4 +1,4 @@
-name: 'Databricks Deploy'
+name: 'Databricks Create Job'
 description: 'Deploy a Databricks Job using the deployment JSON template'
 inputs:
   input-folder: 
