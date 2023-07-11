@@ -6804,47 +6804,46 @@ const databricks_token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('da
 const databricks_host = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('databricks-host');
 
 async function createJob() {
-  try {
-    const templateData = fs__WEBPACK_IMPORTED_MODULE_2__.readFileSync(`${dir}/${template_file}.json`);
-    const inputData = fs__WEBPACK_IMPORTED_MODULE_2__.readFileSync(`${dir}/${input_file}.json`);
 
-    const input = JSON.parse(inputData);
-    let template = JSON.parse(templateData);
+  const templateData = fs__WEBPACK_IMPORTED_MODULE_2__.readFileSync(`${dir}/${template_file}.json`);
+  const inputData = fs__WEBPACK_IMPORTED_MODULE_2__.readFileSync(`${dir}/${input_file}.json`);
+
+  const input = JSON.parse(inputData);
+  let template = JSON.parse(templateData);
 
 
-    function replaceValues(obj, inputObj) {
-      if (typeof obj === 'object') {
-        for (let key in obj) {
-          if (typeof obj[key] === 'object') {
-            replaceValues(obj[key], inputObj);
-          } else if (typeof obj[key] === 'string' && inputObj.hasOwnProperty(obj[key])) {
-            obj[key] = inputObj[obj[key]];
-          }
+  function replaceValues(obj, inputObj) {
+    if (typeof obj === 'object') {
+      for (let key in obj) {
+        if (typeof obj[key] === 'object') {
+          replaceValues(obj[key], inputObj);
+        } else if (typeof obj[key] === 'string' && inputObj.hasOwnProperty(obj[key])) {
+          obj[key] = inputObj[obj[key]];
         }
       }
     }
-
-    replaceValues(template, input);
-
-    const response = await node_fetch__WEBPACK_IMPORTED_MODULE_1__(`${databricks_host}/api/2.0/jobs/create`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${databricks_token}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(template)
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log("Job created successfully:", data);
-      _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput('response', JSON.stringify(data));
-    } else {
-      _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(`Failed to create job: ${response.status} - ${errorText}`);
-    }
-  } catch (error) {
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(`Error occurred while creating job: ${error}`);
   }
+
+  replaceValues(template, input);
+
+  const response = await node_fetch__WEBPACK_IMPORTED_MODULE_1__(`${databricks_host}/api/2.0/jobs/create`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${databricks_token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(template)
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log("Job created successfully:", data);
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput('response', JSON.stringify(data));
+  } else {
+    const errorText = await response.text();
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(`Failed to create job: ${response.status} - ${errorText}`);
+  }
+
 }
 
 createJob();
