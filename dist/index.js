@@ -6826,7 +6826,7 @@ async function createJob() {
 
   replaceValues(template, input);
 
-  const response = await node_fetch__WEBPACK_IMPORTED_MODULE_1__(`${databricks_host}/api/2.0/jobs/create`, {
+  const response = await node_fetch__WEBPACK_IMPORTED_MODULE_1__(`${databricks_host}/api/2.1/jobs/create`, {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${databricks_token}`,
